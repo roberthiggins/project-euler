@@ -70,15 +70,12 @@ end
 def vector_product(y_index, x_index, y_vector, x_vector)
 
     product = 1
-    velocity = 3
-    velocity = 0 if y_vector == 0 && x_vector == 0
+    velocity = y_vector == 0 && x_vector == 0 ? 0 : 3
 
     cells = get_cells(y_index, x_index, y_vector, x_vector, velocity)
     cells.each { |cell| product *= cell.val }
 
-    if product > $highest
-        $highest = product
-    end
+    return product
 end
 
 =begin Solution
@@ -91,7 +88,8 @@ $grid.each_with_index { |list, y|
     list.each_with_index { |num, x|
         for y_vector in -1..1
             for x_vector in -1..1
-                vector_product(y, x, y_vector, x_vector)
+                product = vector_product(y, x, y_vector, x_vector)
+                $highest = product if product > $highest
             end
         end
     }

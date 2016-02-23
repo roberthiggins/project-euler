@@ -20,8 +20,14 @@ end
     Determine if a number is a prime
 =end
 def is_prime?(n, existing_primes=[])
-  existing_primes.each { |prime| return false if n % prime == 0 }
-  true
+    if n == 2
+        return true
+    elsif n % 2 == 0
+        return false
+    else
+        existing_primes.each { |prime| return false if n % prime == 0 }
+        return true
+    end
 end
 
 =begin
@@ -31,9 +37,9 @@ end
     we spend forever calculating primes we never use.
 =end
 def add_prime(limit=10000000)
-    i = $primes[-1]
+    i = $primes[-1] + 1
     while i <= limit * 1.0 do
-        if i % 2 == 1 && is_prime?(i, $primes)
+        if is_prime?(i, $primes)
             $primes.push(i)
             return true
         end
